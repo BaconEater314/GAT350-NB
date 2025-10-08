@@ -208,6 +208,8 @@
     <None Include="..\..\Build\Assets\Platformer\Scenes\prototypes.json" />
     <None Include="..\..\Build\Assets\Platformer\Tilemaps\tilemap.json" />
     <None Include="..\..\Build\Assets\scene.json" />
+    <None Include="..\..\Build\Assets\Shaders\basic.frag" />
+    <None Include="..\..\Build\Assets\Shaders\basic.vert" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
