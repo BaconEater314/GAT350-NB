@@ -16,8 +16,9 @@ int main(int argc, char* argv[]) {
 
     std::vector<vec3> points{ { -0.5f, -0.5f, 0 }, { 0, 0.5f, 0 }, { 0.5f, -0.5f, 0 } }; 
     std::vector<vec3> colors{ { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } };
+    std::vector<vec2> textcoord{ {0, 0 } , {0.5f, 1.0f },{ 1, 1 } };
 
-    GLuint vbo[2];
+    GLuint vbo[3];
     glGenBuffers(1, vbo);
 
     //vertext buffer (position)
@@ -27,6 +28,10 @@ int main(int argc, char* argv[]) {
     //vertext buffer (color)
     glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * colors.size(), colors.data(), GL_STATIC_DRAW);
+
+    //vertext buffer (textcoord)
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * textcoord.size(), textcoord.data(), GL_STATIC_DRAW);
 
     //vertex array
     GLuint vao;
@@ -42,6 +47,11 @@ int main(int argc, char* argv[]) {
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+    //textcoord
+    glEnableVertexAttribArray(2);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
     //vertex shader
     std::string vs_source;
@@ -94,12 +104,16 @@ int main(int argc, char* argv[]) {
 
     glUseProgram(shaderProgram);
 
+    //texture
+    res_t<Texture> texture = Resources().Get<Texture>("textures/beast.png");
+
     //uniform
     GLint uniform = glGetUniformLocation(shaderProgram, "u_time");
     ASSERT(uniform != -1);
     ASSERT_MSG(uniform != -1, "Could not find uniform u_time.");
 
-    
+    GLint tex_uniform = glGetUniformLocation(shaderProgram, "u_texture");
+    glUniform1i(tex_uniform, texture->m_texture);
 
     // MAIN LOOP
     while (!quit) {
@@ -117,8 +131,6 @@ int main(int argc, char* argv[]) {
         glUniform1f(uniform, GetEngine().GetTime().GetTime());
 
         // draw
-        neu::vec3 color{ 0, 0, 0 };
-        neu::GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
         neu::GetEngine().GetRenderer().Clear();
 
         glBindVertexArray(vao);
