@@ -32,4 +32,5 @@ namespace neu {
 	void Text::Draw(Renderer& renderer, float x, float y) {
 		
 	}
+
 }

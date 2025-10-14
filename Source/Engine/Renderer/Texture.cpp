@@ -32,6 +32,8 @@ namespace neu {
             return false;
         }
 
+        SDL_FlipSurface(surface, SDL_FLIP_VERTICAL);
+
         const SDL_PixelFormatDetails* details = SDL_GetPixelFormatDetails(surface->format);
 
         int channels = details->bytes_per_pixel;
@@ -43,8 +45,17 @@ namespace neu {
 
         glTexImage2D(m_target, 0, internalFormat, surface->w, surface->h, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
 
+        // Texture parameters
+        glTexParameteri(m_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(m_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        glTexParameteri(m_target, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(m_target, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+        glActiveTexture(GL_TEXTURE0);
+
         SDL_DestroySurface(surface);
 
         return true;
-    } 
+    }
 }

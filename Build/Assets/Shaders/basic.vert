@@ -14,10 +14,11 @@ void main(){
 	float amplitude = 0.3;
 	vec3 position = a_position;
 
+	/*
 	float offset = sin(u_time * frequency + position.y) * amplitude;
 	position.x += offset;
 
-	//gl_Position = vec4(position, 1.0);
+	gl_Position = vec4(position, 1.0);*/
 
 	v_color = a_color;
 	v_textcoord = a_textcoord;
