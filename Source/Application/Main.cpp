@@ -12,11 +12,6 @@ int main(int argc, char* argv[]) {
     SDL_Event e;
     bool quit = false;
 
-    //OpenGL initialization
-    std::vector<vec3> points{ { -0.5f, -0.5f, 0 }, { 0, 0.5f, 0 }, { 0, 0.5f, 0 } };
-    std::vector<vec3> colors{ { 1, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 } };
-    std::vector<vec2> textcoord{ {0, 0 } , {0.5f, 1.0f },{ 1, 1 } };
-
     struct Vertex {
         vec3 position;
         vec3 color;
@@ -108,14 +103,18 @@ int main(int argc, char* argv[]) {
     program->Link();
     program->Use();
 
+    //glm
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+
     //texture
     res_t<Texture> texture = Resources().Get<Texture>("Textures/beast.png");
 
     //uniform
-    GLint uniform = glGetUniformLocation(program, "u_time");
-
-    GLint tex_uniform = glGetUniformLocation(program, "u_texture");
-    glUniform1i(tex_uniform, texture->m_texture);
+    program->SetUniform("m_texture", 0);
+    program->SetUniform("u_model", model);
 
     // MAIN LOOP
     while (!quit) {
@@ -127,10 +126,8 @@ int main(int argc, char* argv[]) {
 
         // update
         neu::GetEngine().Update();
-        glUniform1f(uniform, neu::GetEngine().GetTime().GetTime());
 
         if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
-        glUniform1f(uniform, GetEngine().GetTime().GetTime());
 
         // draw
         neu::GetEngine().GetRenderer().Clear();

@@ -1,4 +1,6 @@
 #pragma once
+#include "Resources/Resource.h"
+#include <glad/glad.h>
 
 namespace neu {
 	class Shader : public Resource {

@@ -8,6 +8,7 @@ out vec3 v_color;
 out vec2 v_textcoord;
 
 uniform float u_time;
+uniform mat4 u_model;
 
 void main(){
 	float frequency = 3.0;
@@ -23,6 +24,6 @@ void main(){
 	v_color = a_color;
 	v_textcoord = a_textcoord;
 
-	gl_Position = vec4(position * sin(u_time), 1.0);
-
+	//gl_Position = vec4(position * sin(u_time), 1.0);
+	gl_Position = u_model * vec4(a_position, 1.0);
 }
