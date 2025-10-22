@@ -21,12 +21,9 @@ namespace neu {
 
 		// uniforms
 		void SetUniform(const std::string& name, float value);
-		//void SetUniform(const std::string& name, int value);
-		//void SetUniform(const std::string& name, unsigned int value);
-		//void SetUniform(const std::string& name, bool value);
 
-		void SetUniform(const std::string& name, const neu::vec2& value);
-		//void SetUniform(const std::string& name, const neu::vec3& value);
+		void SetUniform(const std::string& name, const glm::vec2& value);
+		void SetUniform(const std::string& name, const glm::vec3& value);
 
 		void SetUniform(const std::string& name, const glm::mat3& value);
 		void SetUniform(const std::string& name, const glm::mat4& value);
