@@ -48,6 +48,7 @@
 #include "Renderer/TextureAnimation.h"
 #include "Renderer/VertexBuffer.h"
 #include "Renderer/Model.h"
+#include "Renderer/Material.h"
 
 // physics
 #include "Physics/Collidable.h"

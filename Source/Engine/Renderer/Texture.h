@@ -34,6 +34,9 @@ namespace neu {
 		/// <returns>A vec2 containing the width and height of the texture</returns>
 		vec2 GetSize() { return m_size;  }
 
+		void SetActive(GLuint unit) { glActiveTexture(unit); }
+		void Bind() { glBindTexture(m_target, m_texture); }
+
 		// Allow Renderer class to access the texture for drawing operations
 		friend class Renderer;
 

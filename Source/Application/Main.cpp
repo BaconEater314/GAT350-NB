@@ -27,27 +27,22 @@ int main(int argc, char* argv[]) {
 
     std::vector<GLushort> indices{ 0, 1, 2, 2, 3, 0 };
 
-    //vertex buffer
+    //model
     auto model3d = std::make_shared<Model>();
     model3d->Load("Models/spot.obj");
 
-    //vertex and fragment shaders
-    auto vs = neu::Resources().Get<neu::Shader>("shaders/basic_lit.vert", GL_VERTEX_SHADER);
-    auto fs = neu::Resources().Get<neu::Shader>("shaders/basic_lit.frag", GL_FRAGMENT_SHADER);
-
-    auto program = std::make_shared<neu::Program>();
-    program->AttachShader(vs);
-    program->AttachShader(fs);
-    program->Link();
-    program->Use();
+    //material
+    auto material = Resources().Get<Material>("materials/cow.mat");
+    material->Bind();
 
     //texture
     res_t<Texture> texture = Resources().Get<Texture>("Textures/spot_diffuse.png");
-    program->SetUniform("u_texture", 0);
+    material->program->SetUniform("u_texture", 0);
 
     //lights
-    program->SetUniform("u_ambient_light", glm::vec3{ 0.5f });
+    material->program->SetUniform("u_ambient_light", glm::vec3{ 0.5f });
     Transform light{ {2, 4, 3} };
+    glm::vec3 lightColor{ 1 };
 
     //transform
     float rotation = 0;
@@ -56,8 +51,6 @@ int main(int argc, char* argv[]) {
     Transform transform{ {1, 0, 0} };
     Transform camera{ {0, 0, 3} };
 
-    //program
-
 
     // MAIN LOOP
     while (!quit) {
@@ -65,6 +58,7 @@ int main(int argc, char* argv[]) {
             if (e.type == SDL_EVENT_QUIT) {
                 quit = true;
             }
+            ImGui_ImplSDL3_ProcessEvent(&e);
         }
 
         // update
@@ -72,14 +66,7 @@ int main(int argc, char* argv[]) {
         if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
         rotation += GetEngine().GetTime().GetDeltaTime() * 90;
-
-        //model matrix
-        //glm::mat4 model = glm::mat4(1.0f);
-        //model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-        //model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-        //model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-        //transform.rotation.y += rotation;
-        program->SetUniform("u_model", transform.GetMatrix());
+        material->program->SetUniform("u_model", transform.GetMatrix());
 
         //view matrix
         float dt = neu::GetEngine().GetTime().GetDeltaTime();
@@ -95,20 +82,39 @@ int main(int argc, char* argv[]) {
         if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE)) camera.position.y += speed * dt;
 
         glm::mat4 view = glm::lookAt(camera.position, camera.position + glm::vec3{ 0, 0, -1 }, glm::vec3{0, 1, 0});
-        program->SetUniform("u_view", view);
+        material->program->SetUniform("u_view", view);
 
-        program->SetUniform("u_light.color", glm::vec3{1, 1, 1});
-        program->SetUniform("u_light.position", (glm::vec3)(view * glm::vec4(light.position, 1)));
+        material->program->SetUniform("u_light.color", lightColor);
+        material->program->SetUniform("u_light.position", (glm::vec3)(view * glm::vec4(light.position, 1)));
 
         //projection matrix
         float aspect = (float)GetEngine().GetRenderer().GetWidth() / GetEngine().GetRenderer().GetHeight();
         glm::mat4 projection = glm::perspective(glm::radians(90.0f), aspect, 0.01f, 100.0f);
-        program->SetUniform("u_projection", projection);
+        material->program->SetUniform("u_projection", projection);
 
         // draw
         neu::GetEngine().GetRenderer().Clear();
 
+        // start new ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplSDL3_NewFrame();
+        ImGui::NewFrame();
+        // set ImGui
+        ImGui::Begin("Editor");
+        ImGui::DragFloat3("Position", glm::value_ptr(light.position), 0.1f);
+        ImGui::ColorEdit3("Color", glm::value_ptr(lightColor));
+        ImGui::DragFloat("Shininess", &material->shininess, 0.1f);
+        ImGui::DragFloat2("Tiling", glm::value_ptr(material->tiling), 0.1f);
+        ImGui::DragFloat2("Offset", glm::value_ptr(material->offset), 0.1f);
+        ImGui::Text("Press 'Esc' to quit.");
+        ImGui::End();
+
+        material->Bind();
         model3d->Draw(GL_TRIANGLES);
+
+        // draw ImGui
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         neu::GetEngine().GetRenderer().Present();
     }

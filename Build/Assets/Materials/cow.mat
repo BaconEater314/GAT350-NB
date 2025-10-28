@@ -1,0 +1,7 @@
+{
+	"program" : "shaders/basic_lit.prog",
+	"texture" : "Textures/spot_diffuse.png",
+	"shininess" : 128,
+	"tiling" : [1, 1],
+	"offset" : [0, 0]
+}

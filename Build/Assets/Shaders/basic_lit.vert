@@ -12,11 +12,20 @@ uniform mat4 u_view;
 uniform mat4 u_projection;
 
 uniform vec3 u_ambient_light;
+
 uniform struct Light
 {
 	vec3 position;
 	vec3 color;
 } u_light;
+
+uniform struct Material
+{
+	sampler2D texture;
+	float shininess;
+	vec2 tiling;
+	vec2 offset;
+} u_material;
 
 vec3 calulateLight(in vec3 position, in vec3 normal){
 	//diffuse
@@ -25,12 +34,17 @@ vec3 calulateLight(in vec3 position, in vec3 normal){
 	vec3 diffuse = u_light.color * intensity;
 
 	//sepcular
+	vec3 reflection = reflect(-light_dir, normal);
+	vec3 view_dir = normalize(-position);
+	intensity = max(dot(reflection, view_dir), 0);
+	intensity = pow(intensity, u_material.shininess);
+	vec3 specular = vec3(intensity);
 
-	return u_ambient_light + diffuse;
+	return u_ambient_light + diffuse + specular;
 }
 
 void main(){
-	v_textcoord = a_textcoord;
+	v_textcoord = a_textcoord * u_material.tiling;
 
 	mat4 model_view = u_view * u_model;
 	vec3 position = vec3(model_view * vec4(a_position, 1));
