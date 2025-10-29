@@ -210,6 +210,7 @@
     <ClCompile Include="Audio\AudioChannel.cpp" />
     <ClCompile Include="Audio\AudioClip.cpp" />
     <ClCompile Include="Audio\AudioSystem.cpp" />
+    <ClCompile Include="Components\ModelRenderer.cpp" />
     <ClCompile Include="Core\File.cpp" />
     <ClCompile Include="Core\Json.cpp" />
     <ClCompile Include="Core\Time.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="Audio\AudioChannel.h" />
     <ClInclude Include="Audio\AudioClip.h" />
     <ClInclude Include="Audio\AudioSystem.h" />
+    <ClInclude Include="Components\ModelRenderer.h" />
     <ClInclude Include="Components\RendererComponent.h" />
     <ClInclude Include="Core\Assert.h" />
     <ClInclude Include="Core\Factory.h" />
@@ -268,6 +270,7 @@
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Physics\Collidable.h" />
+    <ClInclude Include="Renderer\GUI.h" />
     <ClInclude Include="Renderer\Material.h" />
     <ClInclude Include="Renderer\Model.h" />
     <ClInclude Include="Renderer\Program.h" />

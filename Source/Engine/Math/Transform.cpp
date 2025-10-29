@@ -59,4 +59,12 @@ namespace neu {
         // Scale of 1.0 maintains the object's original dimensions
         SERIAL_READ(value, scale);
     }
+    void Transform::UpdateGUI()
+    {
+        if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::DragFloat3("Position", glm::value_ptr(position), 0.1f);
+            ImGui::DragFloat3("Rotation", glm::value_ptr(rotation), 0.1f);
+            ImGui::DragFloat3("Scale", glm::value_ptr(scale), 0.1f);
+        }
+    }
 }

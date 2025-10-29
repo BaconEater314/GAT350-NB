@@ -131,6 +131,9 @@
     <ClCompile Include="..\ThirdParty\imgui\backends\imgui_impl_sdl3.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Components\ModelRenderer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Random.h">
@@ -255,6 +258,12 @@
     </ClInclude>
     <ClInclude Include="Renderer\Material.h">
       <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\GUI.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ModelRenderer.h">
+      <Filter>Source\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,0 +1,32 @@
+{
+  "actors": [
+    {
+      "name": "ball;",
+      "persistent": true,
+      "transform": {
+        "position": [
+          0,
+          640,
+          512
+        ],
+        "rotation": [
+          0,
+          180,
+          0,
+          "scale",
+          :,
+          [
+            1,
+            1,
+            1
+          ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "Models/sphere.obj",
+          "material": "Materials/cow.mat"
+        }
+      ]
+    }
+}

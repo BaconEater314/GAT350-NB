@@ -12,6 +12,10 @@ int main(int argc, char* argv[]) {
     SDL_Event e;
     bool quit = false;
 
+    //Initialize scene
+    auto scene = std::make_unique<Scene>();
+    scene->Load("Scenes/scenes01.json");
+
     struct Vertex {
         vec3 position;
         vec3 color;
@@ -65,13 +69,16 @@ int main(int argc, char* argv[]) {
         neu::GetEngine().Update();
         if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
+
         rotation += GetEngine().GetTime().GetDeltaTime() * 90;
         material->program->SetUniform("u_model", transform.GetMatrix());
 
         //view matrix
         float dt = neu::GetEngine().GetTime().GetDeltaTime();
-        transform.rotation.y += 90 * dt;
+        //transform.rotation.y += 90 * dt;
        
+        scene->Update(dt);
+
         float speed = 10.0f;
         if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) camera.position.x -= speed * dt;
         if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) camera.position.x += speed * dt;
@@ -103,14 +110,16 @@ int main(int argc, char* argv[]) {
         ImGui::Begin("Editor");
         ImGui::DragFloat3("Position", glm::value_ptr(light.position), 0.1f);
         ImGui::ColorEdit3("Color", glm::value_ptr(lightColor));
-        ImGui::DragFloat("Shininess", &material->shininess, 0.1f);
-        ImGui::DragFloat2("Tiling", glm::value_ptr(material->tiling), 0.1f);
-        ImGui::DragFloat2("Offset", glm::value_ptr(material->offset), 0.1f);
+        //light.UpdateGUI();
+        transform.UpdateGUI();
+        material->UpdateGUI();
         ImGui::Text("Press 'Esc' to quit.");
         ImGui::End();
 
         material->Bind();
         model3d->Draw(GL_TRIANGLES);
+
+        scene->Draw(GetEngine().GetRenderer());
 
         // draw ImGui
         ImGui::Render();

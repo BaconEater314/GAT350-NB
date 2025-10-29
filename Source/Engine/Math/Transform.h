@@ -1,12 +1,12 @@
 ﻿#pragma once
-#include "Vector2.h"
+#include "Renderer/GUI.h"
 #include "Core/Serializable.h"
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/euler_angles.hpp>
 
 namespace neu {
 
-    struct Transform : public ISerializable {
+    struct Transform : public ISerializable, GUI {
  
         glm::vec3 position{ 0, 0, 0 };
         glm::vec3 rotation{ 0, 0, 0 };
@@ -35,5 +35,7 @@ namespace neu {
         }
 
         void Read(const serial_data_t& value) override;
+
+        void UpdateGUI() override;
     };
 }
