@@ -3,6 +3,7 @@
 
 namespace neu {
 	FACTORY_REGISTER(ModelRenderer);
+
 	void ModelRenderer::Update(float dt)
 	{
 
@@ -11,6 +12,7 @@ namespace neu {
 	void ModelRenderer::Draw(Renderer& renderer)
 	{
 		material->Bind();
+		material->program->SetUniform("u_model", owner->transform.GetMatrix());
 		model->Draw(GL_TRIANGLES);
 	}
 	void ModelRenderer::Read(const serial_data_t& value) 

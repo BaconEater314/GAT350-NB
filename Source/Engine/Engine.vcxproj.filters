@@ -132,7 +132,13 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Components\ModelRenderer.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\LightComponent.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\CameraComponent.cpp">
+      <Filter>Source\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,6 +269,12 @@
       <Filter>Source\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Components\ModelRenderer.h">
+      <Filter>Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LightComponent.h">
+      <Filter>Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\CameraComponent.h">
       <Filter>Source\Components</Filter>
     </ClInclude>
   </ItemGroup>

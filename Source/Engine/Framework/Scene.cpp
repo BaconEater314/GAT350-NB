@@ -78,6 +78,47 @@ namespace neu {
     /// </summary>
     /// <param name="renderer">The renderer used to draw the actors.</param>
     void Scene::Draw(Renderer& renderer) {
+        //get light
+        LightComponent* light = nullptr;
+        for (auto& actor : m_actors) {
+            if (!actor->active) continue;
+
+            light = actor->GetComponent<LightComponent>();
+            if (light && light->active) break;
+        }
+
+        //get camera
+        CameraComponent* camera = nullptr;
+        for (auto& actor : m_actors) {
+            if (!actor->active) continue;
+
+            camera = actor->GetComponent<CameraComponent>();
+            if (camera && camera->active) break;
+        }
+
+        if (!camera) {
+            LOG_WARNING("No camera active in scene");
+            return;
+        }
+
+        //get programs
+        std::vector<Program*> programs;
+        for (auto& actor : m_actors) {
+            ModelRenderer* model = actor->GetComponent<ModelRenderer>();
+            if (!model || !model->active) continue;
+
+            if (model->material && model->material->program) {
+                programs.insert(model->material->program.get());
+            }
+        }
+
+        for (auto program : programs) {
+            program->Use();
+            program->SetUniform("u_ambient_light", glm::vec3{ 0.2f });
+            camera->SetProgram(*program);
+            if (light) light->SetProgram(*program, "u_light", camera->view);
+        }
+
         // Iterate through all actors in the scene
         for (auto& actor : m_actors) {
             // Only render actors that are marked as active

@@ -4,22 +4,9 @@
       "name": "ball;",
       "persistent": true,
       "transform": {
-        "position": [
-          0,
-          640,
-          512
-        ],
-        "rotation": [
-          0,
-          180,
-          0,
-          "scale",
-          :,
-          [
-            1,
-            1,
-            1
-          ]
+        "position": [ 0, 640, 512 ],
+        "rotation": [0, 180, 0 ]
+          "scale" : [ 1, 1, 1 ]
       },
       "components": [
         {
@@ -28,5 +15,35 @@
           "material": "Materials/cow.mat"
         }
       ]
+    },
+    {
+      "name": "camera",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, 0, 5 ],
+        "rotation": [ 0, 180, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "CameraComponent"
+        }
+      ]
+    },
+    {
+      "name": "light",
+      "persistent": true,
+      "transform": {
+        "position": [ 5, 5, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": [ 1, 1, 0 ]
+        }
+      ]
     }
+  ]
 }
