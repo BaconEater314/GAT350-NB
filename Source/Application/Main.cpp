@@ -14,7 +14,10 @@ int main(int argc, char* argv[]) {
 
     //Initialize scene
     auto scene = std::make_unique<Scene>();
-    scene->Load("Scenes/scenes01.json");
+    scene->Load("Scenes/scene01.json");
+
+    //Initialize editor
+    auto editor = std::make_unique<Editor>();
 
     // MAIN LOOP
     while (!quit) {
@@ -30,35 +33,19 @@ int main(int argc, char* argv[]) {
         float dt = neu::GetEngine().GetTime().GetDeltaTime();
         if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
        
+        // scene
         scene->Update(dt);
 
-        float speed = 10.0f;
-        //if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) camera.position.x -= speed * dt;
-        //if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) camera.position.x += speed * dt;
-        //if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) camera.position.z -= speed * dt;
-        //if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) camera.position.z += speed * dt;
-        //if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_LSHIFT)) camera.position.y -= speed * dt;
-        //if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Q)) camera.position.y -= speed * dt;
-        //if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE)) camera.position.y += speed * dt
+        // editor
+        editor->Begin();
+        editor->UpdateGui(*scene);
 
         // draw
         neu::GetEngine().GetRenderer().Clear();
-
-        // start new ImGui frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplSDL3_NewFrame();
-        ImGui::NewFrame();
-        
-        // set ImGui
-        ImGui::Begin("Editor");
-        ImGui::End();
-
         scene->Draw(GetEngine().GetRenderer());
-
         // draw ImGui
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
         neu::GetEngine().GetRenderer().Present();
     }
 

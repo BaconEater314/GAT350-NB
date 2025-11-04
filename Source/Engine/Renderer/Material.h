@@ -1,6 +1,6 @@
 #pragma once
 #include "Resources/Resource.h"
-#include "GUI.h"
+#include "GUI/GUI.h"
 #include <glm/glm.hpp>
 
 namespace neu{
@@ -15,7 +15,7 @@ namespace neu{
 		bool Load(const std::string& filename);
 		void Bind();
 
-		void UpdateGUI() override;
+		void UpdateGui() override;
 	public:
 		float shininess{ 2 };
 		glm::vec2 tiling{ 1,1 };

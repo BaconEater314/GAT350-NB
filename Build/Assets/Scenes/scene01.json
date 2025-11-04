@@ -4,32 +4,37 @@
       "name": "ball;",
       "persistent": true,
       "transform": {
-        "position": [ 0, 640, 512 ],
-        "rotation": [0, 180, 0 ]
+        "position": [ 0, 0, 0 ],
+        "rotation": [0, 180, 0 ],
           "scale" : [ 1, 1, 1 ]
       },
       "components": [
         {
           "type": "ModelRenderer",
-          "model": "Models/sphere.obj",
+          "model": "Models/spot.obj",
           "material": "Materials/cow.mat"
         }
       ]
     },
-    {
-      "name": "camera",
-      "persistent": true,
-      "transform": {
-        "position": [ 0, 0, 5 ],
-        "rotation": [ 0, 180, 0 ],
-        "scale": [ 1, 1, 1 ]
-      },
-      "components": [
+    		{
+			"name": "camera",
+			"persistent": true,
+			"transform": {
+				"position": [ 0, 0, 5 ],
+				"rotation": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ]
+			},
+			"components": [
         {
           "type": "CameraComponent"
-        }
-      ]
-    },
+        },
+				{
+					"type": "FirstPersonController",
+					"speed": 5,
+          "sensitivity": 0.2
+				}
+			]
+		},
     {
       "name": "light",
       "persistent": true,
@@ -41,7 +46,43 @@
       "components": [
         {
           "type": "LightComponent",
-          "color": [ 1, 1, 0 ]
+          "color": [ 1, 0, 0 ],
+          "intensity": 2,
+          "range":  20
+        }
+      ]
+    },
+    {
+      "name": "light",
+      "persistent": true,
+      "transform": {
+        "position": [ -5, 5, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": [ 0, 1, 0 ],
+          "intensity": 1,
+          "range": 30
+        }
+      ]
+    },
+    {
+      "name": "light",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, -5, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": [ 0, 0, 1 ],
+          "intensity": 3,
+          "range": 10
         }
       ]
     }

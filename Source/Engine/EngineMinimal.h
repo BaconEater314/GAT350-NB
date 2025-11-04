@@ -50,6 +50,10 @@
 #include "Renderer/Model.h"
 #include "Renderer/Material.h"
 
+// GUI
+#include "GUI/GUI.h"
+#include "GUI/Editor.h"
+
 // physics
 #include "Physics/Collidable.h"
 
@@ -57,6 +61,7 @@
 #include "Components/ModelRenderer.h"
 #include "Components/CameraComponent.h"
 #include "Components/LightComponent.h"
+#include "Components/FirstPersonController.h"
 
 // third-party library
 //fmod

@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "Framework/Actor.h"
 #include <string>
 #include <vector>
 #include <list>
@@ -54,7 +55,7 @@ namespace neu {
     /// }
     /// ```
     /// </summary>
-    class Scene : public ISerializable {
+    class Scene : public ISerializable, public GUI {
     public:
         /// <summary>
         /// Constructs a scene with a reference to the parent game instance.
@@ -133,6 +134,8 @@ namespace neu {
         /// </summary>
         /// <param name="dt">Time elapsed since the last frame update, in seconds</param>
         void Update(float dt);
+
+        void UpdateGui() override;
 
         /// <summary>
         /// Renders all active actors in the scene using the provided renderer.
@@ -282,6 +285,7 @@ namespace neu {
         std::vector<T*> GetActorsByTag(const std::string& tag);
 
     private:
+        friend class Editor;
 
         /// <summary>
         /// Container for all actors in the scene.
@@ -301,7 +305,10 @@ namespace neu {
         /// - Actor removal: O(n) for search, O(1) for removal once found
         /// </summary>
         std::list<std::unique_ptr<Actor>> m_actors;
+        glm::vec3 m_ambientLight;
     };
+    
+
 
     // ============================================================================
     // TEMPLATE IMPLEMENTATIONS

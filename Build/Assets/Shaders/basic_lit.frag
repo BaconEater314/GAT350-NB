@@ -5,6 +5,13 @@ in vec3 v_color;
 
 out vec4 f_color;
 
+in VS_OUT
+{
+	vec2 texcoord;
+	vec3 color;
+} fs_in;
+
+
 uniform sampler2D u_texture;
 
 uniform struct Material
@@ -18,5 +25,5 @@ uniform struct Material
 } u_material;
 
 void main(){
-	f_color = texture(u_material.baseMap, v_textcoord) * vec4(v_color, 1);
+	f_color = texture(u_material.baseMap, fs_in.texcoord) * vec4(fs_in.color, 1);
 }

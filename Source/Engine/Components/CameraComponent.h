@@ -1,7 +1,7 @@
 #pragma once
 
 namespace neu {
-	class CameraComponent : public Component, GUI {
+	class CameraComponent : public Component{
 	public:
 		CLASS_PROTOTYPE(CameraComponent)
 
@@ -13,7 +13,7 @@ namespace neu {
 		void SetProgram(Program& program);
 
 		void Read(const serial_data_t& value) override;
-		void UpdateGUI() override;
+		void UpdateGui() override;
 
 	public:
 		glm::mat4 projection{ 1 };
