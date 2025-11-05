@@ -2,6 +2,14 @@
 
 namespace neu {
 	class LightComponent : public Component{
+
+	public:
+		enum class LightType {
+			Point,
+			Directional,
+			Spot
+		};
+
 	public:
 		CLASS_PROTOTYPE(LightComponent)
 
@@ -15,5 +23,9 @@ namespace neu {
 		glm::vec3 color{ 1, 1, 1 };
 		float intensity{ 1 };
 		float range{ 20 };
+
+		LightType lightType = LightType::Point;
+		float outerSpotAngle = 30.0f;
+		float innerSpotAngle = 30.0f;
 	};
 }

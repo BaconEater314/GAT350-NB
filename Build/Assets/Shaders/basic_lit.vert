@@ -1,6 +1,9 @@
 #version 460 core
 
-#define MAX_LIGHTS 5
+#define MAX_LIGHTS	5
+#define POINT		0
+#define DIRECTIONAL 1
+#define SPOT		2
 
 layout (location = 0) in vec3 a_position;
 layout (location = 1) in vec2 a_textcoord;
@@ -18,11 +21,14 @@ out vec3 v_color;
 
 uniform struct Light
 {
+	int type;
 	vec3 position;
 	vec3 color;
-
+	vec3 direction;
 	float intensity;
 	float range;
+	float outerSpotAngle;
+	float innerSpotAngle;
 };
 
 uniform struct Material
@@ -52,8 +58,37 @@ float calculateAttenuation(in float light_distance, in float range)
 }
 
 vec3 calulateLight(in Light light, in vec3 position, in vec3 normal){
+	
+	vec3 light_dir;
+	float attenuation;
+	float light_distance;
+
+	switch (light.type)
+	{
+		case POINT:
+			light_dir = normalize(light.position - position);
+			light_distance = length(light.position - position);
+			attenuation = calculateAttenuation(light_distance, light.range);
+		break;
+
+		case DIRECTIONAL:
+			light_dir = normalize(light.direction);
+			attenuation = 1.0;
+		break;
+
+		case SPOT:
+			light_dir = normalize(light.position - position);
+			light_distance = length(light.position - position);
+			attenuation = calculateAttenuation(light_distance, light.range);
+
+			float angle = acos(dot(light_dir, light.direction));
+			if(angle > light.outerSpotAngle) attenuation = 0.0;
+			else attenuation *= smoothstep(light.outerSpotAngle, light.innerSpotAngle, angle);;
+
+			break;
+	}
+
 	//diffuse
-	vec3 light_dir = normalize(light.position - position);
 	float intensity = max(dot(light_dir, normal), 0); 
 	vec3 diffuse = light.color * intensity * u_material.baseColor;
 
@@ -63,9 +98,6 @@ vec3 calulateLight(in Light light, in vec3 position, in vec3 normal){
 	intensity = max(dot(reflection, view_dir), 0);
 	intensity = pow(intensity, u_material.shininess);
 	vec3 specular = vec3(intensity);
-
-	float light_distance = length(light.position - position);
-	float attenuation = calculateAttenuation(light_distance, light.range);
 
 	return (diffuse + specular) * light.intensity * attenuation;
 }

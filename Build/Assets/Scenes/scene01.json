@@ -82,7 +82,10 @@
           "type": "LightComponent",
           "color": [ 0, 0, 1 ],
           "intensity": 3,
-          "range": 10
+          "range": 10,
+          "lightType": "spot",
+          "innerSpotAngle": 4,
+          "outerSpotAngle": 4
         }
       ]
     }
