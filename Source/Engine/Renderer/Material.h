@@ -9,6 +9,15 @@ namespace neu{
 
 	class Material : public Resource, GUI {
 	public:
+		enum class Parameters : uint32_t {
+			None			= 0,
+			BaseMap			= (1 << 0),
+			SpecularMap		= (1 << 1),
+			EmissiveMap		= (1 << 2),
+			NormalMap		= (1 << 3),
+			CubeMap			= (1 << 4)
+		};
+
 		Material() = default;
 		~Material() = default;
 
@@ -23,8 +32,15 @@ namespace neu{
 
 		res_t<Texture> baseMap;
 		res_t<Program> program;
-		res_t<Texture> specularMap;
 		glm::vec3 baseColor{ 1, 1, 1 };
+		res_t<Texture> specularMap;
+		res_t<Texture> emissiveMap;
+		glm::vec3 emissiveColor{ 1, 1, 1 };
+		res_t<Texture> normalMap;
+		res_t<Texture> cubeMap;
 
+		float ior{ 1.3f };
+
+		Parameters parameters = Parameters::None;
 	};
 }

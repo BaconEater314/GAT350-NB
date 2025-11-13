@@ -7,7 +7,6 @@ int main(int argc, char* argv[]) {
     // initialize engine
     LOG_INFO("initialize engine...");
     neu::GetEngine().Initialize();
-
     
     SDL_Event e;
     bool quit = false;
@@ -15,6 +14,7 @@ int main(int argc, char* argv[]) {
     //Initialize scene
     auto scene = std::make_unique<Scene>();
     scene->Load("Scenes/scene01.json");
+    scene->Start();
 
     //Initialize editor
     auto editor = std::make_unique<Editor>();

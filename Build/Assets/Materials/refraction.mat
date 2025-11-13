@@ -1,0 +1,4 @@
+{
+	"program": "shaders/refraction.prog",
+	"cubeMap": "textures/river_cubemap/posx.jpg textures/river_cubemap/negx.jpg textures/river_cubemap/posy.jpg textures/river_cubemap/negy.jpg textures/river_cubemap/posz.jpg textures/river_cubemap/negz.jpg"
+}

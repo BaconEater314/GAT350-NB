@@ -1,12 +1,30 @@
 {
   "actors": [
     {
-      "name": "ball;",
+      "name": "skybox;",
       "persistent": true,
       "transform": {
         "position": [ 0, 0, 0 ],
-        "rotation": [0, 180, 0 ],
-          "scale" : [ 1, 1, 1 ]
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "Models/cube.obj",
+          "material": "Materials/skybox.mat",
+          "enableDepth": false,
+          "cullFace": "front"
+        }
+      ]
+    },
+    {
+      "name": "ball;",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, 100, 0 ],
+        "rotation": [ 0, 180, 0 ],
+        "scale": [ 1, 1, 1 ]
       },
       "components": [
         {
@@ -16,25 +34,62 @@
         }
       ]
     },
-    		{
-			"name": "camera",
-			"persistent": true,
-			"transform": {
-				"position": [ 0, 0, 5 ],
-				"rotation": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ]
-			},
-			"components": [
+    {
+      "name": "spot;",
+      "persistent": true,
+      "active": false,
+      "transform": {
+        "position": [ 0, 0, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "Models/spot.obj",
+          "material": "Materials/reflection.mat"
+        },
+        {
+          "type": "RotationComponent",
+          "rotate": [0, 90, 0]
+        }
+      ]
+    },
+    {
+      "name": "crate;",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, 0, 0 ],
+        "rotation": [ 0, 180, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelRenderer",
+          "model": "Models/cube.obj",
+          "material": "Materials/crate.mat"
+        }
+      ]
+    },
+    {
+      "name": "camera",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, 0, 5 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
         {
           "type": "CameraComponent"
         },
-				{
-					"type": "FirstPersonController",
-					"speed": 5,
+        {
+          "type": "FirstPersonController",
+          "speed": 5,
           "sensitivity": 0.2
-				}
-			]
-		},
+        }
+      ]
+    },
     {
       "name": "light",
       "persistent": true,
@@ -46,9 +101,9 @@
       "components": [
         {
           "type": "LightComponent",
-          "color": [ 1, 0, 0 ],
+          "color": [ 1, 1, 1 ],
           "intensity": 2,
-          "range":  20
+          "range": 20
         }
       ]
     },
@@ -63,7 +118,7 @@
       "components": [
         {
           "type": "LightComponent",
-          "color": [ 0, 1, 0 ],
+          "color": [ 1, 1, 1 ],
           "intensity": 1,
           "range": 30
         }
@@ -80,7 +135,7 @@
       "components": [
         {
           "type": "LightComponent",
-          "color": [ 0, 0, 1 ],
+          "color": [ 1, 1, 1 ],
           "intensity": 3,
           "range": 10,
           "lightType": "spot",

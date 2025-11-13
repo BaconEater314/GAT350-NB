@@ -1,5 +1,5 @@
 {
-	"program" : "shaders/basic_lit.prog",
+	"program" : "shaders/basic_phong.prog",
 	"baseMap": "Textures/spot_diffuse.png",
 	"baseColor" :  [1, 1, 1],
 	"shininess" : 16,
