@@ -54,5 +54,8 @@ namespace neu {
 		glEnableVertexAttribArray(index);
 		glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, (void *)offset);
 	}
+	void VertexBuffer::UpdateGui()
+	{
+	}
 }
 

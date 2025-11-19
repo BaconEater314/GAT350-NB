@@ -122,6 +122,10 @@ namespace neu {
 		if (location != -1) glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 	}
 
+	void Program::UpdateGui()
+	{
+	}
+
 	GLint Program::GetUniformLocation(const std::string& name) {
 		// find uniform location in map
 		auto it = m_uniformLocations.find(name);

@@ -11,13 +11,15 @@ namespace neu {
 
 	void ModelRenderer::Draw(Renderer& renderer)
 	{
-		material->Bind();
-		material->program->SetUniform("u_model", owner->transform.GetMatrix());
+		if (material) {
+			material->Bind();
+			material->program->SetUniform("u_model", owner->transform.GetMatrix());
+		}
 		
 		glDepthMask(enableDepth);
 		glCullFace(cullFace);
 
-		model->Draw(GL_TRIANGLES);
+		if(model) model->Draw(GL_TRIANGLES);
 	}
 	void ModelRenderer::Read(const serial_data_t& value) 
 	{
@@ -41,6 +43,15 @@ namespace neu {
 		if (equalsIgnoreCase(cullFaceName, "front")) cullFace = GL_FRONT;
 	}
 	void ModelRenderer::UpdateGui()
-	{
+	{	
+		std::string text;
+
+		text = (model) ? model->name : "none";
+		ImGui::Text("Model: %s", text.c_str());
+		Editor::GetDialogResource<Model>(model, "ModelDialog", "Open model", "Model file (*.obj;*.fbx;*.glb){.obj,.fbx,.glb},.*");
+		
+		text = (model) ? material->name : "none";
+		ImGui::Text("Material: %s", text.c_str());
+		Editor::GetDialogResource<Model>(model, "MaterialDialog", "Open model", "Material file (*.mat){*.mat},.*");
 	}
 }

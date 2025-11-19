@@ -155,6 +155,15 @@ namespace neu {
         /// <param name="renderer">Renderer instance used for all drawing operations</param>
         void Draw(class Renderer& renderer);
 
+        void DrawPass(class Renderer& renderer,
+            std::vector<class Program*>& programs,
+            std::vector<class LightComponent*>& lights,
+            class CameraComponent* camera);
+
+        template <typename T>
+            requires std::derived_from<T, Component>
+        std::vector<T*> GetActorComponents();
+
         /// <summary>
         /// Adds an actor to the scene with optional immediate initialization.
         /// 
@@ -314,6 +323,22 @@ namespace neu {
     // TEMPLATE IMPLEMENTATIONS
     // These must be in the header because templates are instantiated at compile time
     // ============================================================================
+
+    template<typename T>
+        requires std::derived_from<T, Component>
+    inline std::vector<T*> Scene::GetActorComponents()
+    {
+        //get light
+        std::vector<T*> components;
+        for (auto& actor : m_actors) {
+            if (!actor->active) continue;
+
+            auto component = actor->GetComponent<T>();
+            if (component && component->active) components.push_back(component);
+        }
+        
+        return components;
+    }
 
     /// <summary>
     /// Template implementation for retrieving actors by type.

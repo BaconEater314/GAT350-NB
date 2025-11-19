@@ -11,6 +11,10 @@ int main(int argc, char* argv[]) {
     SDL_Event e;
     bool quit = false;
 
+    auto renderTexture = std::make_shared<RenderTexture>();
+    renderTexture->Create(512, 512);
+    Resources().AddResource("renderTexture", renderTexture);
+
     //Initialize scene
     auto scene = std::make_unique<Scene>();
     scene->Load("Scenes/scene01.json");
@@ -43,6 +47,7 @@ int main(int argc, char* argv[]) {
         // draw
         neu::GetEngine().GetRenderer().Clear();
         scene->Draw(GetEngine().GetRenderer());
+
         // draw ImGui
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

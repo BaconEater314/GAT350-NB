@@ -29,7 +29,7 @@ namespace neu {
 		/// Calculated by dividing the texture size by the number of columns and rows.
 		/// </summary>
 		/// <returns>A vec2 containing the frame width (x) and height (y)</returns>
-		vec2 GetSize() const;
+		glm::vec2 GetSize() const;
 
 		/// <summary>
 		/// Gets the rectangle (UV coordinates) for a specific frame in the sprite sheet.
@@ -69,6 +69,8 @@ namespace neu {
 		/// </summary>
 		/// <returns>Resource pointer to the Texture</returns>
 		res_t<Texture> GetTexture() { return m_texture; }
+
+		void UpdateGui() override;
 
 	private:
 		// Number of columns in the sprite sheet grid

@@ -23,6 +23,10 @@ namespace neu {
 		}
 	}
 
+	void Model::UpdateGui()
+	{
+	}
+
 
 
 	void Model::ProcessNode(aiNode* node, const aiScene* scene) {

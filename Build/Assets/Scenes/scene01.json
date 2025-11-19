@@ -19,25 +19,24 @@
       ]
     },
     {
-      "name": "ball;",
+      "name": "window;",
       "persistent": true,
       "transform": {
-        "position": [ 0, 100, 0 ],
-        "rotation": [ 0, 180, 0 ],
+        "position": [ 3, 3, 0 ],
+        "rotation": [ 0, 0, 0 ],
         "scale": [ 1, 1, 1 ]
       },
       "components": [
         {
           "type": "ModelRenderer",
-          "model": "Models/spot.obj",
-          "material": "Materials/cow.mat"
+          "model": "Models/quad.obj",
+          "material": "Materials/rtt.mat"
         }
       ]
     },
     {
       "name": "spot;",
       "persistent": true,
-      "active": false,
       "transform": {
         "position": [ 0, 0, 0 ],
         "rotation": [ 0, 0, 0 ],
@@ -47,7 +46,7 @@
         {
           "type": "ModelRenderer",
           "model": "Models/spot.obj",
-          "material": "Materials/reflection.mat"
+          "material": "Materials/refraction.mat"
         },
         {
           "type": "RotationComponent",
@@ -58,6 +57,7 @@
     {
       "name": "crate;",
       "persistent": true,
+      "active": false,
       "transform": {
         "position": [ 0, 0, 0 ],
         "rotation": [ 0, 180, 0 ],
@@ -68,6 +68,21 @@
           "type": "ModelRenderer",
           "model": "Models/cube.obj",
           "material": "Materials/crate.mat"
+        }
+      ]
+    },
+    {
+      "name":"camera_rtt",
+      "persistent": true,
+      "transform": {
+        "position": [ 0, 2, 2 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "CameraComponent",
+          "outputTexture": "renderTexture"
         }
       ]
     },

@@ -46,6 +46,7 @@
 #include "Renderer/Program.h"
 #include "Renderer/Texture.h"
 #include "Renderer/TextureAnimation.h"
+#include "Renderer/RenderTexture.h"
 #include "Renderer/VertexBuffer.h"
 #include "Renderer/Model.h"
 #include "Renderer/Material.h"
