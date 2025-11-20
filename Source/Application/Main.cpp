@@ -11,9 +11,14 @@ int main(int argc, char* argv[]) {
     SDL_Event e;
     bool quit = false;
 
+    // create render textures
     auto renderTexture = std::make_shared<RenderTexture>();
     renderTexture->Create(512, 512);
     Resources().AddResource("renderTexture", renderTexture);
+
+    renderTexture = std::make_shared<RenderTexture>();
+    renderTexture->Create(1024, 1024);
+    Resources().AddResource("postprocessTexture", renderTexture);
 
     //Initialize scene
     auto scene = std::make_unique<Scene>();

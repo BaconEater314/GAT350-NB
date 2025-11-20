@@ -65,6 +65,7 @@
 #include "Components/LightComponent.h"
 #include "Components/FirstPersonController.h"
 #include "Components/RotationComponent.h"
+#include "Components/PostProcessComponent.h"
 
 // third-party library
 //fmod
