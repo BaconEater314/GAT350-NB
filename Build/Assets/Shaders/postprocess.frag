@@ -3,6 +3,8 @@
 #define GRAYSCALE	(1 << 0)
 #define COLORTINT	(1 << 1)
 #define SCANLINE	(1 << 2)
+#define NOISE		(1 << 3)
+#define INVERT		(1 << 4)
 
 in vec2 v_texcoord;
 

@@ -125,16 +125,14 @@ void main(){
 	float specularMask = ((u_material.parameters & SPECULAR_MAP) != 0u)
 	? texture(u_emissiveMap, fs_in.texcoord).r
 	: 1;
-
 	
-
 	vec3 color = u_ambient_light;
 	for(int i = 0; i < u_numLights; i++)
 	{
 		float shadow = (u_lights[i].shadowCaster && ((u_material.parameters & SHADOW_MAP) != 0u))
 		? calulateShadow(fs_in.shadowcoord, 0.001)
 		: 1.0;
-		color += calulateLight(u_lights[i], fs_in.position, fs_in.normal, specularMask);
+		color += calulateLight(u_lights[i], fs_in.position, fs_in.normal, specularMask) * shadow;
 	}
 
 	vec4 emissive = ((u_material.parameters & EMISSIVE_MAP) != 0u) 

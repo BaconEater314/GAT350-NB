@@ -91,7 +91,7 @@ namespace neu {
 		}
 
 		if (shadowMap) {
-			shadowMap->SetActive(GL_TEXTURE4);
+			shadowMap->SetActive(GL_TEXTURE5);
 			shadowMap->Bind();
 			program->SetUniform("u_shadowMap", 5);
 			parameters = (Parameters)((uint32_t)parameters | (uint32_t)Parameters::ShadowMap);

@@ -12,7 +12,7 @@ namespace neu {
 		
 		program.SetUniform(name + ".lightType", (int)lightType);
 		program.SetUniform(name + ".position", position);
-		program.SetUniform(name + ".direction", position);
+		program.SetUniform(name + ".direction", direction);
 		program.SetUniform(name + ".color", color);
 		program.SetUniform(name + ".intensity", intensity);
 		program.SetUniform(name + ".range", range);
