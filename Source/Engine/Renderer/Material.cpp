@@ -37,6 +37,10 @@ namespace neu {
 		SERIAL_READ_NAME(document, "cubeMap", textureName);
 		if (!textureName.empty()) cubeMap = Resources().Get<CubeMap>(textureName);
 
+		textureName = "";
+		SERIAL_READ_NAME(document, "shadowMap", textureName);
+		if (!textureName.empty()) shadowMap = Resources().Get<Texture>(textureName);
+
 		//base color, shininess, tiling, and offset
 		SERIAL_READ(document, baseColor);
 		SERIAL_READ(document, emissiveColor);
@@ -86,6 +90,13 @@ namespace neu {
 			parameters = (Parameters)((uint32_t)parameters | (uint32_t)Parameters::CubeMap);
 		}
 
+		if (shadowMap) {
+			shadowMap->SetActive(GL_TEXTURE4);
+			shadowMap->Bind();
+			program->SetUniform("u_shadowMap", 5);
+			parameters = (Parameters)((uint32_t)parameters | (uint32_t)Parameters::ShadowMap);
+		}
+
 		program->SetUniform("u_material.baseColor", baseColor);
 		program->SetUniform("u_material.emissiveColor", emissiveColor);
 		program->SetUniform("u_material.shininess", shininess);
@@ -125,7 +136,7 @@ namespace neu {
 			}
 
 			if (normalMap) {
-				ImGui::Text("Emissive Map: %s", normalMap->name.c_str());
+				ImGui::Text("Normal Map: %s", normalMap->name.c_str());
 				Editor::ShowTexture(*normalMap, 32, 32);
 				Editor::GetDialogResource<Texture>(normalMap, "NormalMapDialogue", "Open Texture", "Image (*.png;*jpeg;*.bmp;*.tga;*.webp){.png,.jpeg,.bmp,.tga,.webp},.*");
 			}

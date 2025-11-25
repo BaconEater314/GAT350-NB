@@ -149,6 +149,33 @@
     <None Include="..\..\Build\Assets\Shaders\postprocess.prog">
       <Filter>Assets\Shaders</Filter>
     </None>
+    <None Include="..\..\Build\Assets\Scenes\scene03.json">
+      <Filter>Assets\Scenes</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\rocks.mat">
+      <Filter>Assets\Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\depth.vert">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\depth.frag">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\depth.prog">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\shadow.mat">
+      <Filter>Assets\Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_shadow.frag">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_shadow.prog">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_shadow.vert">
+      <Filter>Assets\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Build\Assets\Textures\beast.png">
@@ -158,6 +185,12 @@
       <Filter>Assets\Textures</Filter>
     </Image>
     <Image Include="..\..\Build\Assets\Textures\spot_diffuse.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\..\..\Users\nbeaty\Downloads\rocks_base.jpg">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="..\..\Build\Assets\Textures\rocks_normal.jpg">
       <Filter>Assets\Textures</Filter>
     </Image>
   </ItemGroup>

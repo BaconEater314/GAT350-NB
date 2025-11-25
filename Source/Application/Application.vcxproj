@@ -209,7 +209,9 @@
     <None Include="..\..\Build\Assets\Materials\postprocess.mat" />
     <None Include="..\..\Build\Assets\Materials\reflection.mat" />
     <None Include="..\..\Build\Assets\Materials\refraction.mat" />
+    <None Include="..\..\Build\Assets\Materials\rocks.mat" />
     <None Include="..\..\Build\Assets\Materials\rtt.mat" />
+    <None Include="..\..\Build\Assets\Materials\shadow.mat" />
     <None Include="..\..\Build\Assets\Materials\skybox.mat" />
     <None Include="..\..\Build\Assets\Materials\squirrel.mat" />
     <None Include="..\..\Build\Assets\Meshes\enemy.msh" />
@@ -218,6 +220,7 @@
     <None Include="..\..\Build\Assets\Platformer\Tilemaps\tilemap.json" />
     <None Include="..\..\Build\Assets\scene.json" />
     <None Include="..\..\Build\Assets\Scenes\scene01.json" />
+    <None Include="..\..\Build\Assets\Scenes\scene03.json" />
     <None Include="..\..\Build\Assets\Shaders\basic_lit.frag" />
     <None Include="..\..\Build\Assets\Shaders\basic_lit.prog" />
     <None Include="..\..\Build\Assets\Shaders\basic_lit.vert" />
@@ -227,6 +230,12 @@
     <None Include="..\..\Build\Assets\Shaders\basic_phong.prog" />
     <None Include="..\..\Build\Assets\Shaders\basic_phong.vert" />
     <None Include="..\..\Build\Assets\Shaders\cubeMap.frag" />
+    <None Include="..\..\Build\Assets\Shaders\depth.frag" />
+    <None Include="..\..\Build\Assets\Shaders\depth.prog" />
+    <None Include="..\..\Build\Assets\Shaders\depth.vert" />
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_shadow.frag" />
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_shadow.prog" />
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_shadow.vert" />
     <None Include="..\..\Build\Assets\Shaders\postprocess.frag" />
     <None Include="..\..\Build\Assets\Shaders\postprocess.prog" />
     <None Include="..\..\Build\Assets\Shaders\postprocess.vert" />
@@ -246,8 +255,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\..\..\..\Users\nbeaty\Downloads\rocks_base.jpg" />
     <Image Include="..\..\Build\Assets\Textures\beast.png" />
     <Image Include="..\..\Build\Assets\Textures\beast01.png" />
+    <Image Include="..\..\Build\Assets\Textures\rocks_normal.jpg" />
     <Image Include="..\..\Build\Assets\Textures\spot_diffuse.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -13,20 +13,10 @@ out VS_OUT{
 	vec3 position;
 	vec2 texcoord;
 	vec3 normal;
+	vec4 shadowcoord;
 	mat3 tbn;
 } vs_out;
 
-uniform struct Light
-{
-	int type;
-	vec3 position;
-	vec3 color;
-	vec3 direction;
-	float intensity;
-	float range;
-	float outerSpotAngle;
-	float innerSpotAngle;
-};
 
 uniform struct Material
 {
@@ -40,21 +30,24 @@ uniform struct Material
 };
 
 uniform int u_numLights = 1;
-uniform Light u_lights[MAX_LIGHTS];
 uniform Material u_material;
 
 uniform mat4 u_model;
 uniform mat4 u_view;
 uniform mat4 u_projection;
+uniform mat4 u_shadow_vp;
 
 uniform vec3 u_ambient_light;
 
 void main(){
-	vs_out.texcoord = a_texcoord;//(a_texcoord * u_material.tiling) * u_material.offset;
+	vs_out.texcoord = (a_texcoord * u_material.tiling) + u_material.offset;
 
 	mat4 model_view = u_view * u_model;
 	vs_out.position = vec3(model_view * vec4(a_position, 1));
 	vs_out.normal = normalize(mat3(model_view) * a_normal);
+	vs_out.shadowcoord = u_shadow_vp * u_model * vec4(a_position, 1);
 
+	//vec3 N = normalize(normal_matrix * a_normal);
+	//vec3 T = normalize(normal_matrix * a_tangent);
 	gl_Position = u_projection * u_view * u_model * vec4(a_position, 1.0);
 }

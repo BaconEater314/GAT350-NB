@@ -20,9 +20,13 @@ int main(int argc, char* argv[]) {
     renderTexture->Create(1024, 1024);
     Resources().AddResource("postprocessTexture", renderTexture);
 
+    renderTexture = std::make_shared<RenderTexture>();
+    renderTexture->CreateDepth(1024, 1024);
+    Resources().AddResource("shadowTexture", renderTexture);
+
     //Initialize scene
     auto scene = std::make_unique<Scene>();
-    scene->Load("Scenes/scene01.json");
+    scene->Load("Scenes/scene03.json");
     scene->Start();
 
     //Initialize editor

@@ -21,6 +21,17 @@ namespace neu {
 
 		if(model) model->Draw(GL_TRIANGLES);
 	}
+
+	void ModelRenderer::DrawShadow(Renderer& renderer, Program& program)
+	{
+		program.SetUniform("u_model", owner->transform.GetMatrix());
+		
+		glDepthMask(enableDepth);
+		glCullFace(cullFace);
+
+		if(model) model->Draw(GL_TRIANGLES);
+	}
+
 	void ModelRenderer::Read(const serial_data_t& value) 
 	{
 		//model
@@ -50,8 +61,8 @@ namespace neu {
 		ImGui::Text("Model: %s", text.c_str());
 		Editor::GetDialogResource<Model>(model, "ModelDialog", "Open model", "Model file (*.obj;*.fbx;*.glb){.obj,.fbx,.glb},.*");
 		
-		text = (model) ? material->name : "none";
+		text = (material) ? material->name : "none";
 		ImGui::Text("Material: %s", text.c_str());
-		Editor::GetDialogResource<Model>(model, "MaterialDialog", "Open model", "Material file (*.mat){*.mat},.*");
+		Editor::GetDialogResource<Material>(material, "MaterialDialog", "Open material", "Material file (*.mat){.mat},.*");
 	}
 }

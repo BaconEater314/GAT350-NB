@@ -4,6 +4,7 @@ namespace neu {
 	FACTORY_REGISTER(PostProcessComponent)
 
 	void PostProcessComponent::Update(float dt)	{
+
 	}
 
 	void PostProcessComponent::Apply(Program& program) {

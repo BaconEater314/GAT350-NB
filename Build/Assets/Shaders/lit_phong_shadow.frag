@@ -10,17 +10,20 @@
 #define EMISSIVE_MAP	(1 << 2)
 #define NORMAL_MAP		(1 << 3)
 #define CUBE_MAP		(1 << 4)
+#define SHADOW_MAP		(1 << 5)
 
 in VS_OUT{
 	vec3 position;
 	vec2 texcoord;
 	vec3 normal;
+	vec4 shadowcoord;
 	mat3 tbn;
 } fs_in;
 
 uniform struct Light
 {
 	int type;
+	bool shadowCaster;
 	vec3 position;
 	vec3 color;
 	vec3 direction;
@@ -49,6 +52,7 @@ uniform sampler2D u_baseMap;
 uniform sampler2D u_specularMap;
 uniform sampler2D u_emissiveMap;
 uniform sampler2D u_normalMap;
+uniform sampler2D u_shadowMap;
 
 uniform vec3 u_ambient_light;
 
@@ -58,6 +62,11 @@ float calculateAttenuation(in float light_distance, in float range)
 {
 	float attenuation = max(0.0, (1.0 - (light_distance / range)));
 	return attenuation * attenuation;
+}
+
+float calulateShadow (in vec4 shadowcoord, in float bias)
+{
+	return texture(u_shadowMap, shadowcoord.xy).z < shadowcoord.z - bias ? 0.0 : 1.0;
 }
 
 vec3 calulateLight(in Light light, in vec3 position, in vec3 normal, in float specularMask){ 
@@ -117,8 +126,14 @@ void main(){
 	? texture(u_emissiveMap, fs_in.texcoord).r
 	: 1;
 
+	
+
 	vec3 color = u_ambient_light;
-	for(int i = 0; i < u_numLights; i++){
+	for(int i = 0; i < u_numLights; i++)
+	{
+		float shadow = (u_lights[i].shadowCaster && ((u_material.parameters & SHADOW_MAP) != 0u))
+		? calulateShadow(fs_in.shadowcoord, 0.001)
+		: 1.0;
 		color += calulateLight(u_lights[i], fs_in.position, fs_in.normal, specularMask);
 	}
 
@@ -126,6 +141,6 @@ void main(){
 	? texture(u_emissiveMap, fs_in.texcoord) * vec4(u_material.emissiveColor, 1)
 	: vec4(u_material.emissiveColor, 1);
 
-	//f_color = texture(u_baseMap, fs_in.texcoord) * vec4(color, 1) + emissive;
-	f_color = vec4(gl_FragCoord.z);
+	f_color = texture(u_baseMap, fs_in.texcoord) * vec4(color, 1) + emissive;
+	//f_color = vec4(gl_FragCoord.z);
 }
