@@ -50,9 +50,11 @@ uniform sampler2D u_specularMap;
 uniform sampler2D u_emissiveMap;
 uniform sampler2D u_normalMap;
 
+in vec2 v_texcoord;
+out vec4 f_color;
+
 uniform vec3 u_ambient_light;
 
-out vec4 f_color;
 
 float calculateAttenuation(in float light_distance, in float range)
 {
@@ -113,11 +115,14 @@ vec3 calulateLight(in Light light, in vec3 position, in vec3 normal, in float sp
 }
 
 void main(){
+	vec4 color = texture(u_baseMap, v_texcoord);
+	vec4 postprocess = color;
+
 	float specularMask = ((u_material.parameters & SPECULAR_MAP) != 0u)
 	? texture(u_emissiveMap, fs_in.texcoord).r
 	: 1;
 
-	vec3 color = u_ambient_light;
+	//color = u_ambient_light;
 	for(int i = 0; i < u_numLights; i++){
 		color += calulateLight(u_lights[i], fs_in.position, fs_in.normal, specularMask);
 	}
@@ -126,6 +131,11 @@ void main(){
 	? texture(u_emissiveMap, fs_in.texcoord) * vec4(u_material.emissiveColor, 1)
 	: vec4(u_material.emissiveColor, 1);
 
-	//f_color = texture(u_baseMap, fs_in.texcoord) * vec4(color, 1) + emissive;
-	f_color = vec4(gl_FragCoord.z);
+	if ((u_parameters & GRAYSCALE) != 0u) postprocess = vec4(vec3((postprocess.r + postprocess.g + postprocess.b) / 3.0), postprocess.a);
+	if ((u_parameters & COLORTINT) != 0u) postprocess = postprocess * vec4(u_colorTint, 1);
+	if ((u_parameters & SCANLINE) != 0u) postprocess = (int(gl_FragCoord.y) % 3 != 0) ? vec4(0, 0, 0, 1) : postprocess;
+	if ((u_parameters & GRAIN) != 0u)  postprocess = postprocess * random(gl_FragCoord.xy + u_time);
+	if ((u_parameters & INVERT) != 0u)  postprocess = vec4(1) - postprocess;
+	
+	//f_color = mix(color, postprocess, u_blend);
 }

@@ -57,6 +57,7 @@ uniform sampler2D u_shadowMap;
 uniform vec3 u_ambient_light;
 
 out vec4 f_color;
+in vec2 v_texcoord;
 
 float calculateAttenuation(in float light_distance, in float range)
 {
@@ -141,4 +142,5 @@ void main(){
 
 	f_color = texture(u_baseMap, fs_in.texcoord) * vec4(color, 1) + emissive;
 	//f_color = vec4(gl_FragCoord.z);
+	
 }
